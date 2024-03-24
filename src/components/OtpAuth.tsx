@@ -1,6 +1,8 @@
 import React, { useState, useRef } from "react";
+import { useRouter } from "next/router";
 
 const OtpAuth: React.FC = () => {
+  const router = useRouter();
   const length = 8;
   const expectedOtp = "12345678"; // Expected OTP value
   const [otpValues, setOtpValues] = useState<string[]>(Array(length).fill(""));
@@ -38,7 +40,7 @@ const OtpAuth: React.FC = () => {
     e.preventDefault();
     const enteredOtp = otpValues.join('');
     if (enteredOtp === expectedOtp) {
-      // Proceed to next screen or perform action
+      router.push("/categories")
       console.log('OTP is correct');
       setError(null);
     } else {

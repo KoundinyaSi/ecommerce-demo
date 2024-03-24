@@ -1,6 +1,6 @@
 import React from 'react';
 
-const HomePage: React.FC = () => {
+const Category: React.FC = () => {
   return (
     <div className='flex flex-col'>
       Hello from Category Page
@@ -8,4 +8,4 @@ const HomePage: React.FC = () => {
   );
 };
 
-export default HomePage;
+export default Category;

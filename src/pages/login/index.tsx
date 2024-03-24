@@ -2,7 +2,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import LoginForm from "~/components/LoginForm";
 
-const SignUpPage: React.FC = () => {
+const LoginPage: React.FC = () => {
   const [loginStatus, setLoginStatus] = useState<boolean>(false);
   const [userEmail, setUserEmail] = useState<string>("");
 
@@ -23,8 +23,8 @@ const SignUpPage: React.FC = () => {
       </div>
       <LoginForm onLoginComplete={handleLoginStatusChange} />
       <h1 className="my-10 w-full text-center">
-        Don't Have an account?{" "}
-        <Link className="font-semibold" href="/">
+        Don't have an account?{" "}
+        <Link className="font-semibold" href="/signup">
           SIGN UP
         </Link>
       </h1>
@@ -32,4 +32,4 @@ const SignUpPage: React.FC = () => {
   );
 };
 
-export default SignUpPage;
+export default LoginPage;

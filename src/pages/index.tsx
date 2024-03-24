@@ -1,10 +1,11 @@
 import React from 'react';
-import SignUpPage from './signUp';
+import LoginPage from './login';
+
 
 const HomePage: React.FC = () => {
   return (
     <div className='flex flex-col'>
-      <SignUpPage />
+      <LoginPage />
     </div>
   );
 };
