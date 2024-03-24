@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 //   onLoginComplete: (status: boolean, email: string) => void;
 // }
 
-const LoginForm: React.FC= ( ) => {
+const LoginForm: React.FC= () => {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [loginStatus, setLoginStatus] = useState<boolean | null>(false);

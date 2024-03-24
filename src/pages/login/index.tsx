@@ -3,14 +3,14 @@ import React, { useState } from "react";
 import LoginForm from "~/components/LoginForm";
 
 const LoginPage: React.FC = () => {
-  const [loginStatus, setLoginStatus] = useState<boolean>(false);
-  const [userEmail, setUserEmail] = useState<string>("");
+  // const [loginStatus, setLoginStatus] = useState<boolean>(false);
+  // const [userEmail, setUserEmail] = useState<string>("");
 
-  const handleLoginStatusChange = async (status: boolean, email: string) => {
-    console.log(status);
-    await setLoginStatus(status);
-    await setUserEmail(email);
-  };
+  // const handleLoginStatusChange = async (status: boolean, email: string) => {
+  //   console.log(status);
+  //   await setLoginStatus(status);
+  //   await setUserEmail(email);
+  // };
 
   return (
     <div className="align-center border-dark-grey my-2 w-1/3 justify-center place-self-center rounded-xl border px-10 py-8">
@@ -21,7 +21,7 @@ const LoginPage: React.FC = () => {
       <h3 className="mt-3 text-center text-xl font-extra-semibold">Welcome back to ECOMMERCE</h3>
       <p className="mt-3 text-center">The next gen business marketplace</p>
       </div>
-      <LoginForm onLoginComplete={handleLoginStatusChange} />
+      <LoginForm />
       <h1 className="my-10 w-full text-center">
         Don't have an account?{" "}
         <Link className="font-semibold" href="/signup">
