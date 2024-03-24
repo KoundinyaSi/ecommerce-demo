@@ -1,21 +1,21 @@
-import React, {ReactNode} from 'react';
-import Header from './Header';
+import React, { ReactNode } from "react";
+import Header from "./Header";
 import { Inter } from "next/font/google";
 
 interface LayoutProps {
-    children: ReactNode;
-  }
-  
-  const inter = Inter({
-    subsets: ["latin"],
-    variable: "--font-sans",
-  });
+  children: ReactNode;
+}
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+});
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
-    <div>
+    <div className={`${inter.variable}`+" align-center flex w-full flex-col justify-items-center font-sans"}>
       <Header />
-      <main>{children}</main>
+      {children}
       {/* Add footer or other shared components here */}
     </div>
   );

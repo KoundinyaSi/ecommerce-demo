@@ -1,4 +1,3 @@
-// pages/signup.tsx
 import Link from "next/link";
 import React, { useState } from "react";
 import OtpAuth from "~/components/OtpAuth";
@@ -35,7 +34,7 @@ const SignUpPage: React.FC = () => {
       <RegistrationForm onSignUpComplete = {handleSignupStatusChange}/>
       <h1 className="my-10 w-full text-center">
         Have an account?{" "}
-        <Link className="font-semibold" href="/">
+        <Link className="font-semibold" href="/login">
           LOGIN
         </Link>
       </h1>
