@@ -21,7 +21,7 @@ const CategoryList: React.FC = () => {
       setCategories(getFakeCategories(100));
     }
     const usersData = JSON.parse(localStorage.getItem("users")!);
-    usersData.forEach((user) => {
+    usersData.forEach((user: { name:string,email:string,password: string, interests:[]; signedIn: boolean; }) => {
       if (!user.interests) {
         return (user.interests = []);
       }
@@ -86,7 +86,7 @@ const CategoryList: React.FC = () => {
   };
 
   const renderCategories = () => {
-    return currentCategories.map((category) => (
+    return currentCategories.map((category: any) => (
       <li className="my-3" key={category.id}>
         <input
           className="text-black"

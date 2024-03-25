@@ -25,9 +25,9 @@ const RegistrationForm: React.FC<SignUpFormProps> = ({ onSignUpComplete })  => {
         formData.get("password")?.toString()!,
         salt,
       );
-        setUserName(name);
+        setUserName(name!);
         setUserPassword(password);
-        setUserEmail(email);
+        setUserEmail(email!);
       if (!name || !email || !password) {
         setError("All fields are required");
         window.alert("All fields are required.");
