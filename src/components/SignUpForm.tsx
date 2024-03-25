@@ -1,13 +1,16 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import bcrypt from "bcryptjs";
 
 interface SignUpFormProps {
-  onSignUpComplete: (status: boolean, email: string) => void;
+  onSignUpComplete: (status: boolean, email: string, name: string, password: string) => void;
 }
 
 const RegistrationForm: React.FC<SignUpFormProps> = ({ onSignUpComplete })  => {
   const [error, setError] = useState<string | null>(null);
-  const [signUpStatus, setSignUpStatus] = useState<boolean | null>(true);
+  const [signUpStatus, setSignUpStatus] = useState<boolean | null>(false);
+  const [userName, setUserName] = useState<string>("");
+  const [userEmail, setUserEmail] = useState<string>("");
+  const [userPassword, setUserPassword] = useState<string>("");
 
   const signUpFormRef = useRef<HTMLFormElement>(null);
 
@@ -22,16 +25,18 @@ const RegistrationForm: React.FC<SignUpFormProps> = ({ onSignUpComplete })  => {
         formData.get("password")?.toString(),
         salt,
       );
-
+        setUserName(name);
+        setUserPassword(password);
+        setUserEmail(email);
       if (!name || !email || !password) {
         setError("All fields are required");
         window.alert("All fields are required.");
         return;
       }
       try {
-        const newUser = { name, email, password: password };
 
         const usersData = JSON.parse(localStorage.getItem("users") || "[]");
+        console.log(usersData)
         const existingUser = usersData.find(
           (user: any) => user.email === email,
         );
@@ -41,16 +46,11 @@ const RegistrationForm: React.FC<SignUpFormProps> = ({ onSignUpComplete })  => {
           signUpFormRef.current?.reset();
           return;
         }
-
-        usersData.push(newUser);
-        localStorage.setItem("users", JSON.stringify(usersData));
         
-        setSignUpStatus(true)
+        setSignUpStatus(signUpStatus => !signUpStatus)
         console.log(email)
         console.log(signUpStatus)
-        await onSignUpComplete(signUpStatus, email)
 
-        console.log("User signed up successfully:", newUser);
         } catch (error) {
         console.error("Error signing up:", error);
       }
@@ -58,6 +58,12 @@ const RegistrationForm: React.FC<SignUpFormProps> = ({ onSignUpComplete })  => {
       console.error("Registration error:", error);
     }
   };
+  useEffect(() => {
+    if (signUpStatus) {
+      console.log('Sign-up successful!');
+      onSignUpComplete(signUpStatus, userEmail, userName, userPassword)
+    }
+  }, [signUpStatus]); 
 
   return (
       <form

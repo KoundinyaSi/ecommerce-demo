@@ -1,20 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+// import isAuth from "~/components/isAuth";
 import { getFakeCategories } from "~/utils/api";
 
 const CategoryList: React.FC = () => {
   const pageSize = 6;
   const [currentPage, setCurrentPage] = useState(1);
-  const categories = getFakeCategories(100);
+  const [categories, setCategories] = useState<object[]>([]);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
-  // Calculate the start and end indexes for the current page
+  useEffect(() => {
+    const cachedCategories = localStorage.getItem("categoriesList");
+    if (cachedCategories) {
+      setCategories(JSON.parse(cachedCategories));
+    } else {
+      setCategories(getFakeCategories(100));
+    }
+    const usersData = JSON.parse(localStorage.getItem("users"));
+    usersData.forEach((user) => {
+      if (!user.interests) {
+        return (user.interests = []);
+      }
+      if(user.signedIn == true){
+        setSelectedCategories([...user.interests])
+      }
+    });
+    localStorage.setItem("users", JSON.stringify(usersData));
+  }, []);
+
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = startIndex + pageSize;
   const currentCategories = categories.slice(startIndex, endIndex);
 
-  // State to store selected category IDs
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
-  // Function to handle page navigation based on page number
   const goToPage = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   };
@@ -45,18 +62,34 @@ const CategoryList: React.FC = () => {
     }
   };
 
+  const toggleCategorySelection = (catName: string) => {
+    const usersData = JSON.parse(localStorage.getItem("users"));
+    const loggedInUser = usersData.find((user: any) => user.signedIn === true);
+    const loggedInUserIndex = usersData.indexOf(loggedInUser);
+    if (
+      usersData[loggedInUserIndex].interests.length == 0 ||
+      !usersData[loggedInUserIndex].interests.includes(catName)
+    ) {
+      usersData[loggedInUserIndex].interests.push(catName);
+      localStorage.setItem("users", JSON.stringify(usersData));
+      console.log(usersData[loggedInUserIndex]);
+    } else if (usersData[loggedInUserIndex].interests.includes(catName)) {
+      usersData[loggedInUserIndex].interests.pop(catName);
+      localStorage.setItem("users", JSON.stringify(usersData));
+      console.log(usersData[loggedInUserIndex]);
+    }
+  };
+
   const renderCategories = () => {
     return currentCategories.map((category) => (
       <li className="my-3" key={category.id}>
-        <label>
-          <input
+        <input
           className="text-black"
-            type="checkbox"
-            // checked={selectedCategories.includes(category.id)}
-            // onChange={() => toggleCategorySelection(category.id)}
-          />
-          <span className="ml-2">{category.name}</span>
-        </label>
+          type="checkbox"
+          checked={selectedCategories.includes(category.name)}
+          onChange={() => toggleCategorySelection(category.name)}
+        />
+        <label className="ml-2">{category.name}</label>
       </li>
     ));
   };
@@ -73,7 +106,7 @@ const CategoryList: React.FC = () => {
         <button
           key={i}
           onClick={() => goToPage(i)}
-          className={currentPage === i ? "font-semibold mx-3" : "mx-1"}
+          className={currentPage === i ? "mx-3 font-semibold" : "mx-1"}
         >
           {i}
         </button>,
@@ -121,7 +154,7 @@ const CategoryList: React.FC = () => {
         Please mark your interests!
       </h1>
       <p className="mt-3 text-center">We will keep you notified</p>
-      <h3 className="mt-5 font-extra-semibold">My saved interests!</h3>
+      <h3 className="font-extra-semibold mt-5">My saved interests!</h3>
       <ul className="mb-5">{renderCategories()}</ul>
       {renderPagination()}
     </div>

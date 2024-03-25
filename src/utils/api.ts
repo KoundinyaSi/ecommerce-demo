@@ -8,5 +8,6 @@ export const getFakeCategories = (count: number) => {
       name: faker.commerce.department()
     });
   }
+  localStorage.setItem("categoriesList", JSON.stringify(categories));
   return categories;
 };

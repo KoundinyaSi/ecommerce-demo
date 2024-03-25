@@ -2,9 +2,6 @@ import React, { useState, useRef } from "react";
 import bcrypt from "bcryptjs";
 import { useRouter } from "next/router";
 
-// interface loginProps {
-//   onLoginComplete: (status: boolean, email: string) => void;
-// }
 
 const LoginForm: React.FC= () => {
   const router = useRouter();
@@ -20,6 +17,7 @@ const LoginForm: React.FC= () => {
       const email = formData.get("email")?.toString();
 
         const usersData = JSON.parse(localStorage.getItem("users") || "[]");
+       
         const existingUser = usersData.find(
           (user: any) => user.email === email,
         );
@@ -29,8 +27,18 @@ const LoginForm: React.FC= () => {
             existingUser.password,
           );
           if (isPasswordCorrect) {
+            usersData.forEach(user => {
+              if(user.email!=email){
+                return user.signedIn = false;
+              }
+              else{
+                return user.signedIn = true;
+              }
+          });
+          localStorage.setItem("users", JSON.stringify(usersData))
             console.log("Logged in successfully");
             setLoginStatus(true);
+            // onLoginComplete(loginStatus, email);
             router.push("/categories");
             return;
           } else {

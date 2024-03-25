@@ -1,44 +1,84 @@
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import OtpAuth from "~/components/OtpAuth";
 import RegistrationForm from "~/components/SignUpForm";
 
 const SignUpPage: React.FC = () => {
-  const [signupStatus, setSignupStatus] = useState<boolean>(false);
-  const [userEmail, setUserEmail] = useState<string>('');
+  const [signupStatus, setSignupStatus] = useState<boolean>();
+  const [userEmail, setUserEmail] = useState<string>("");
+  const [otpSuccess, setOtpSuccess] = useState<boolean>();
+  const [userName, setUserName] = useState<string>("");
+  const [userPassword, setUserPassword] = useState<string>("");
 
-  const handleSignupStatusChange = async(status: boolean, email: string) => {
-    console.log(status)
-    await setSignupStatus(status);
-    await setUserEmail(email);
+  // usersData.push(newUser);
+  // localStorage.setItem("users", JSON.stringify(usersData));
+
+  const handleSignupStatusChange = (
+    status: boolean,
+    email: string,
+    name: string,
+    password: string,
+  ) => {
+    console.log("Signup form parent signup:",status);
+    setSignupStatus(status);
+    setUserEmail(email);
+    setUserName(name);
+    setUserPassword(password);
   };
+
+  const handleOtpSuccessChange = (otpStatus: boolean) => {
+    console.log("OTP from signUp:",otpStatus);
+    setOtpSuccess(otpStatus);
+  };
+
+  useEffect(() => {
+    if (signupStatus == true && otpSuccess==true) {
+      const usersData = JSON.parse(localStorage.getItem("users") || "[]");
+      console.log(usersData);
+      const currentUser = {
+        name: userName,
+        email: userEmail,
+        password: userPassword,
+        signedIn: true,
+      };
+      usersData.push(currentUser);
+      usersData.forEach(user => {
+        if(user.name!=currentUser.name){
+          return user.signedIn = false
+        }
+      });
+      console.log(usersData);
+      localStorage.setItem("users", JSON.stringify(usersData));
+    }
+  }, [signupStatus, otpSuccess]);
 
   return (
     <div className="align-center border-dark-grey my-2 w-1/3 justify-center place-self-center rounded-xl border px-10 py-8">
       {signupStatus ? (
         <div className="w-full">
-        <h1 className="my-4 text-center text-3xl font-bold font-semibold">
-        Verify your email
-      </h1>
-      <p className="text-center text-sm px-5">
-      Enter the 8 digit code you have received on 
-      {userEmail}
-      </p>
-        <OtpAuth />
+          <h1 className="my-4 text-center text-3xl font-bold font-semibold">
+            Verify your email
+          </h1>
+          <p className="px-5 text-center text-sm">
+            Enter the 8 digit code you have received on
+            {userEmail}
+          </p>
+          <OtpAuth onOtpSuccess={handleOtpSuccessChange} />
         </div>
-      ):(
+      ) : (
         <div>
-      <h1 className="my-6 text-center text-3xl font-bold font-semibold">
-        Create your account
-      </h1>
-      <RegistrationForm onSignUpComplete = {handleSignupStatusChange}/>
-      <h1 className="my-10 w-full text-center">
-        Have an account?{" "}
-        <Link className="font-semibold" href="/login">
-          LOGIN
-        </Link>
-      </h1>
-    </div>)}
+          <h1 className="my-6 text-center text-3xl font-bold font-semibold">
+            Create your account
+          </h1>
+          <RegistrationForm onSignUpComplete={handleSignupStatusChange} />
+          <h1 className="my-10 w-full text-center">
+            Have an account?{" "}
+            <Link className="font-semibold" href="/">
+              LOGIN
+            </Link>
+          </h1>
+        </div>
+      )}
     </div>
   );
 };

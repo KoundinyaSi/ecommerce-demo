@@ -16,7 +16,6 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     <div className={`${inter.variable}`+" align-center flex w-full flex-col justify-items-center font-sans"}>
       <Header />
       {children}
-      {/* Add footer or other shared components here */}
     </div>
   );
 };
