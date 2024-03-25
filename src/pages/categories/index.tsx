@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
-// import isAuth from "~/components/isAuth";
 import { getFakeCategories } from "~/utils/api";
 
 const CategoryList: React.FC = () => {

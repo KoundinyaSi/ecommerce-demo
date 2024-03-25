@@ -30,6 +30,7 @@ const RegistrationForm: React.FC<SignUpFormProps> = ({ onSignUpComplete })  => {
         setUserEmail(email!);
       if (!name || !email || !password) {
         setError("All fields are required");
+        console.log(error)
         window.alert("All fields are required.");
         return;
       }
@@ -52,6 +53,7 @@ const RegistrationForm: React.FC<SignUpFormProps> = ({ onSignUpComplete })  => {
         console.log(signUpStatus)
 
         } catch (error) {
+          
         console.error("Error signing up:", error);
       }
     } catch (error) {

@@ -35,8 +35,8 @@ const LoginForm: React.FC= () => {
               }
           });
           localStorage.setItem("users", JSON.stringify(usersData))
-            console.log("Logged in successfully");
             setLoginStatus(true);
+            console.log(loginStatus)
             const authStatus = {status: true,email: email}
             localStorage.setItem("authStatus",JSON.stringify(authStatus))
             // onLoginComplete(loginStatus, email);
@@ -49,6 +49,7 @@ const LoginForm: React.FC= () => {
           }
         } else {
           setError("User is not registered. Please Sign-up before logging in.");
+          console.log(error)
           window.alert(
             "User is not registered. Please Sign-up before logging in.",
           );
