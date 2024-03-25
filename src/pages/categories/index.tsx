@@ -1,14 +1,19 @@
+import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
 // import isAuth from "~/components/isAuth";
 import { getFakeCategories } from "~/utils/api";
 
 const CategoryList: React.FC = () => {
+  const router = useRouter()
   const pageSize = 6;
   const [currentPage, setCurrentPage] = useState(1);
   const [categories, setCategories] = useState<object[]>([]);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
   useEffect(() => {
+    if(!localStorage.getItem("authStatus")){
+      router.push("/")
+    }
     const cachedCategories = localStorage.getItem("categoriesList");
     if (cachedCategories) {
       setCategories(JSON.parse(cachedCategories));

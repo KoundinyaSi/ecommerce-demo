@@ -2,7 +2,6 @@ import React, { useState, useRef } from "react";
 import bcrypt from "bcryptjs";
 import { useRouter } from "next/router";
 
-
 const LoginForm: React.FC= () => {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
@@ -38,6 +37,8 @@ const LoginForm: React.FC= () => {
           localStorage.setItem("users", JSON.stringify(usersData))
             console.log("Logged in successfully");
             setLoginStatus(true);
+            const authStatus = {status: true,email: email}
+            localStorage.setItem("authStatus",JSON.stringify(authStatus))
             // onLoginComplete(loginStatus, email);
             router.push("/categories");
             return;

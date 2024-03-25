@@ -10,8 +10,6 @@ const SignUpPage: React.FC = () => {
   const [userName, setUserName] = useState<string>("");
   const [userPassword, setUserPassword] = useState<string>("");
 
-  // usersData.push(newUser);
-  // localStorage.setItem("users", JSON.stringify(usersData));
 
   const handleSignupStatusChange = (
     status: boolean,
@@ -33,6 +31,8 @@ const SignUpPage: React.FC = () => {
 
   useEffect(() => {
     if (signupStatus == true && otpSuccess==true) {
+      const authStatus = {status: true,email: userEmail}
+      localStorage.setItem("authStatus",JSON.stringify(authStatus))
       const usersData = JSON.parse(localStorage.getItem("users") || "[]");
       console.log(usersData);
       const currentUser = {
