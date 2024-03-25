@@ -20,7 +20,7 @@ const CategoryList: React.FC = () => {
     } else {
       setCategories(getFakeCategories(100));
     }
-    const usersData = JSON.parse(localStorage.getItem("users"));
+    const usersData = JSON.parse(localStorage.getItem("users")!);
     usersData.forEach((user) => {
       if (!user.interests) {
         return (user.interests = []);
@@ -68,7 +68,7 @@ const CategoryList: React.FC = () => {
   };
 
   const toggleCategorySelection = (catName: string) => {
-    const usersData = JSON.parse(localStorage.getItem("users"));
+    const usersData = JSON.parse(localStorage.getItem("users")!);
     const loggedInUser = usersData.find((user: any) => user.signedIn === true);
     const loggedInUserIndex = usersData.indexOf(loggedInUser);
     if (

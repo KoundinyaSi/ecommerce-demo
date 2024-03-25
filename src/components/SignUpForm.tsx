@@ -18,11 +18,11 @@ const RegistrationForm: React.FC<SignUpFormProps> = ({ onSignUpComplete })  => {
     e.preventDefault();
     try {
       const salt = await bcrypt.genSalt(10);
-      const formData = new FormData(signUpFormRef.current);
+      const formData = new FormData(signUpFormRef.current!);
       const name = formData.get("user-name")?.toString();
       const email = formData.get("email")?.toString();
       const password = await bcrypt.hash(
-        formData.get("password")?.toString(),
+        formData.get("password")?.toString()!,
         salt,
       );
         setUserName(name);

@@ -12,7 +12,7 @@ const LoginForm: React.FC= () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const formData = new FormData(loginFormRef.current);
+      const formData= new FormData(loginFormRef.current!);
       const email = formData.get("email")?.toString();
 
         const usersData = JSON.parse(localStorage.getItem("users") || "[]");
@@ -22,7 +22,7 @@ const LoginForm: React.FC= () => {
         );
         if (existingUser) {
           const isPasswordCorrect = await bcrypt.compare(
-            formData.get("password")?.toString(),
+            formData.get("password")?.toString()!,
             existingUser.password,
           );
           if (isPasswordCorrect) {
