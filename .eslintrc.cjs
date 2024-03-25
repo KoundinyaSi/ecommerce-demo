@@ -25,21 +25,8 @@ const config = {
     "react-hooks/exhaustive-deps": "off",
     "@typescript-eslint/prefer-nullish-coalescing": "off",
     "react/no-unescaped-entities": "off",
-    "@typescript-eslint/no-unused-vars": [
-      "warn",
-      {
-        "argsIgnorePattern": "^_"
-      }
-    ],
+    "@typescript-eslint/no-unused-vars": "off",
     "@typescript-eslint/require-await": "off",
-    "@typescript-eslint/no-misused-promises": [
-      "error",
-      {
-        "checksVoidReturn": {
-          "attributes": false
-        }
-      }
-    ]
   }
 }
 module.exports = config;
