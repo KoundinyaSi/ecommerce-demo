@@ -13,7 +13,7 @@ const inter = Inter({
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
-    <div className={`${inter.variable}`+" align-center flex w-full flex-col justify-items-center font-sans"}>
+    <div className="align-center flex w-full flex-col justify-items-center font-interSans">
       <Header />
       {children}
     </div>

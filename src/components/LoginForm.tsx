@@ -26,7 +26,7 @@ const LoginForm: React.FC= () => {
             existingUser.password,
           );
           if (isPasswordCorrect) {
-            usersData.forEach(user => {
+            usersData.forEach((user: {name: string, password: string, email: string ,signedIn: boolean, interests: [] }) => {
               if(user.email!=email){
                 return user.signedIn = false;
               }

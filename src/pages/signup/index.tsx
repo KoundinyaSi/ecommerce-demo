@@ -42,7 +42,7 @@ const SignUpPage: React.FC = () => {
         signedIn: true,
       };
       usersData.push(currentUser);
-      usersData.forEach(user => {
+      usersData.forEach((user: { name: string; password: string; email: string; interests: []; signedIn: boolean; }) => {
         if(user.name!=currentUser.name){
           return user.signedIn = false
         }
