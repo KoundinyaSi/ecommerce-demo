@@ -15,10 +15,10 @@ const LoginForm: React.FC= () => {
       const formData= new FormData(loginFormRef.current!);
       const email = formData.get("email")?.toString();
 
-        const usersData = JSON.parse(localStorage.getItem("users") || "[]");
+        const usersData = JSON.parse(localStorage.getItem("users") ?? "[]");
        
         const existingUser = usersData.find(
-          (user: any) => user.email === email,
+          (user: { name:string,email:string,password: string, interests:[]; signedIn: boolean; }) => user.email === email,
         );
         if (existingUser) {
           const isPasswordCorrect = await bcrypt.compare(
